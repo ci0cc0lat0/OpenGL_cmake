@@ -23,11 +23,18 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} ${GLFW_DIR}/libs/glfw3.lib)
 
 # Ideally, I would have something automatic to read the files from the src/root folder and shove them into the bin directory
-configure_file(vert_shader.vs ${CMAKE_CURRENT_BINARY_DIR}/vert_shader.vs COPYONLY)
-configure_file(frag_shader.fs ${CMAKE_CURRENT_BINARY_DIR}/frag_shader.fs COPYONLY)
-configure_file(TextFile1.txt ${CMAKE_CURRENT_BINARY_DIR}/TextFile1.txt COPYONLY)
+#configure_file(vert_shader.vs ${CMAKE_CURRENT_BINARY_DIR}/vert_shader.vs COPYONLY)
+#configure_file(frag_shader.fs ${CMAKE_CURRENT_BINARY_DIR}/frag_shader.fs COPYONLY)
+#configure_file(TextFile1.txt ${CMAKE_CURRENT_BINARY_DIR}/TextFile1.txt COPYONLY)
 
-
+# That automatic solution
+file(GLOB config_files ${CMAKE_SOURCE_DIR}/*)
+foreach(file ${config_files})
+    if(IS_FILE ${ADDITIONAL_CLEAN_FILES})
+        get_filename_component(file_name ${file} NAME)
+        configure_file(${file} ${CMAKE_CURRENT_BINARY_DIR}/${file_name} @ONLY)
+    endif()
+endforeach()
 
 
 if(WIN32)
