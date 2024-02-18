@@ -18,9 +18,9 @@ target_link_libraries(${PROJECT_NAME} ${GLFW_DIR}/libs/glfw3.lib)
 
 
 # That automatic solution
-file(GLOB config_files ${CMAKE_SOURCE_DIR}/*)
+file(GLOB config_files "${CMAKE_SOURCE_DIR}/*")
 foreach(file ${config_files})
-    if(IS_FILE ${ADDITIONAL_CLEAN_FILES})
+    if(NOT IS_DIRECTORY ${file})
         get_filename_component(file_name ${file} NAME)
         configure_file(${file} ${CMAKE_CURRENT_BINARY_DIR}/${file_name} @ONLY)
     endif()
